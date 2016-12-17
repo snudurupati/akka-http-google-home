@@ -13,6 +13,7 @@ This project uses :
 Use [Lightbend Activator](https://www.lightbend.com/activator/docs) or [sbt](http://www.scala-sbt.org/) to run this project:
 
 The Server can be started by following Command :
+cd into the folder and...
     sbt run
 OR
     activator run

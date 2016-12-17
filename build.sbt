@@ -7,6 +7,8 @@ scalaVersion := "2.11.7"
 
 organization := "com.knoldus"
 
+enablePlugins(JavaAppPackaging)
+
 val akkaV = "2.4.7"
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-http-core" % akkaV,
