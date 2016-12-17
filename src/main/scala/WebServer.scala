@@ -38,8 +38,8 @@ object WebServer {
             }
           }
         } ~ get {
-              complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>Say hello to akka-http webservice for Google " +
-                "Home " +
+              complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>Say hello to akka-http based webservice for " +
+                "Google Assistant" +
                 "webhook.</h1>"))
             }
       }

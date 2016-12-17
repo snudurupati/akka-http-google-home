@@ -1,4 +1,4 @@
-# Akka-http-logging-starter-kit
+# Akka-http-google-home
 This example shows how to use a webhook to to receive web service to receive a POST request from API.AI 
 in the form of the response to a user query matched by intents by Google Assistant
 
