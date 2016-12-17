@@ -9,6 +9,8 @@ import akka.http.scaladsl.model.headers.Location
 import akka.stream.ActorMaterializer
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
+import com.typesafe.config.Config
+import com.typesafe.config.ConfigFactory
 import spray.json.DefaultJsonProtocol._
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import scala.io.StdIn
@@ -25,6 +27,7 @@ object WebServer {
   implicit val webhookFormat = jsonFormat6(Webhook)
 
   //def saveOrder(order: Order): Future[Done] = ???
+  val config = ConfigFactory.load()
 
   def main(args: Array[String]) {
 
@@ -53,7 +56,8 @@ object WebServer {
             }
       }
 
-    val bindingFuture = Http().bindAndHandle(route, interface, port)
+
+    val bindingFuture = Http().bindAndHandle(route, config.getString("http.interface"), config.getInt("http.port"))
 
     /*println(s"Server online at http://localhost:8080/\nPress RETURN to stop...")
     StdIn.readLine() // let it run until user presses return
