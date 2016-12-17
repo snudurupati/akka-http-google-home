@@ -43,12 +43,16 @@ object WebServer {
     val route =
       path("webhook") {
         post {
-          entity(as[Webhook]) {
+          /*entity(as[Webhook]) {
             webhook => complete {
               // do some function like -- list.add(customer)
               s"got webhook with name ${webhook.location}"
+            }*/
+            decodeRequest{
+              entity(as[String]){ str =>
+                complete(str)
+              }
             }
-          }
         } ~ get {
               complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, "<h1>Say hello to akka-http based webservice for " +
                 "Google Assistant" +
