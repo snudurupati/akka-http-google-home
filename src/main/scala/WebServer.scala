@@ -50,6 +50,7 @@ object WebServer {
             }*/
             decodeRequest{
               entity(as[String]){ str =>
+                println(str)
                 complete(str)
               }
             }
