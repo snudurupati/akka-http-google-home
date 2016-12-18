@@ -5,26 +5,33 @@
 import java.util.TimeZone
 
 import akka.actor.ActorSystem
+import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
+import akka.http.scaladsl.marshalling.ToResponseMarshallable
 import akka.http.scaladsl.model.headers.Location
 import akka.stream.ActorMaterializer
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import com.typesafe.config.Config
 import com.typesafe.config.ConfigFactory
+import spray.json.DefaultJsonProtocol
 import spray.json.DefaultJsonProtocol._
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
 import scala.io.StdIn
 import akka.http.scaladsl.Http
 import java.net._
 
+case class Webhook(query: List[String], contexts: List[String], location: Option[String], timezone: Option[String], lang: Option[String], sessionID: Option[Long])
+
+case class WebhookResponse(speech: String, displayText: String, data: Option[Array[String]], contextOut: Option[List[String]], source: String)
+
+case object WebhookResponse extends SprayJsonSupport with DefaultJsonProtocol {
+  implicit val webhookFormat = jsonFormat5(WebhookResponse.apply)
+}
 
 object WebServer {
 
-  case class Webhook(query: List[String], contexts: List[String], location: Option[String], timezone:
-  Option[String], lang: Option[String], sessionID: Option[Long])
-
   // formats for unmarshalling and marshalling
-  implicit val webhookFormat = jsonFormat6(Webhook)
+  //implicit val webhookFormat = jsonFormat6(Webhook)
 
   //def saveOrder(order: Order): Future[Done] = ???
   val config = ConfigFactory.load()
@@ -51,7 +58,10 @@ object WebServer {
             decodeRequest{
               entity(as[String]){ str =>
                 println(str)
-                complete(str)
+                complete{
+                  WebhookResponse("hey man response!", "hey man response!",Option(Array("")),Option(List("")),
+                  "diwo")
+                }
               }
             }
         } ~ get {
