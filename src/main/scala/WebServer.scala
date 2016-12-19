@@ -70,6 +70,7 @@ object WebServer {
         post {
           entity(as[Webhook]) {
             webhook => complete {
+              println(webhook)
               // generate unique response for every matched query
               fetchQueryAnswer(webhook.result.resolvedQuery)
             }
